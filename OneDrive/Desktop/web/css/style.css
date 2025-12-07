@@ -240,6 +240,25 @@ body {
     flex-wrap: wrap;
 }
 
+.subject-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+}
+
+.pill {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--text-primary);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.12);
+    backdrop-filter: blur(8px);
+}
+
 .btn {
     padding: 0.875rem 2rem;
     border: none;
@@ -1264,6 +1283,12 @@ section {
 
 .footer-section p {
     color: rgba(255, 255, 255, 0.7);
+}
+
+.team-line {
+    margin-top: 0.5rem;
+    font-weight: 700;
+    color: #ffffff;
 }
 
 .footer-section ul {

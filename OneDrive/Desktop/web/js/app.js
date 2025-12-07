@@ -268,8 +268,18 @@ function generateAISuggestion() {
     const tasks = loadTasks();
     const subjects = [...new Set(tasks.map(t => t.subject))];
     
+    // If no tasks yet, use default semester subjects to showcase AI plan
+    const fallbackSubjects = [
+        'Web Technology',
+        'Theory of Computation',
+        'Computer Networks',
+        'Artificial Intelligence',
+        'Research & Methodologies',
+        'Software Engineering'
+    ];
+
     if (subjects.length === 0) {
-        alert('Add some tasks first to get AI suggestions!');
+        displaySuggestion(fallbackSubjects.slice(0, 4), 3, '50-10');
         return;
     }
     
@@ -526,45 +536,67 @@ function initializeSampleData() {
     const sampleTasks = [
         {
             id: Date.now() + 1,
-            title: 'Complete Calculus Assignment',
-            subject: 'Mathematics',
+            title: 'Web Technology lab prep',
+            subject: 'Web Technology',
             duration: 2,
             priority: 'high',
             deadline: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            description: 'Chapters 5-7, Practice problems 1-25',
+            description: 'HTML5 semantics + responsive grid showcase',
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: Date.now() + 2,
-            title: 'Study Biology Chapter 8',
-            subject: 'Biology',
+            title: 'Theory of Computation proofs',
+            subject: 'Theory of Computation',
             duration: 1.5,
             priority: 'medium',
             deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            description: 'Cell Division and Genetics',
+            description: 'Pumping lemma examples for CFLs',
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: Date.now() + 3,
-            title: 'English Essay Writing',
-            subject: 'English',
-            duration: 2.5,
+            title: 'CN routing revision',
+            subject: 'Computer Networks',
+            duration: 2,
             priority: 'high',
             deadline: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            description: '1500-word essay on climate change',
+            description: 'OSPF vs BGP quick notes',
             completed: true,
             createdAt: new Date().toISOString()
         },
         {
             id: Date.now() + 4,
-            title: 'History Project Presentation',
-            subject: 'History',
+            title: 'AI mini-project polishing',
+            subject: 'Artificial Intelligence',
             duration: 3,
             priority: 'high',
             deadline: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-            description: 'World War II Research and Presentation',
+            description: 'Heuristics + evaluation demo for expo',
+            completed: false,
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: Date.now() + 5,
+            title: 'Research methodology notes',
+            subject: 'Research & Methodologies',
+            duration: 1.5,
+            priority: 'medium',
+            deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            description: 'Problem statements + literature grid',
+            completed: false,
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: Date.now() + 6,
+            title: 'Software Engineering SRS review',
+            subject: 'Software Engineering',
+            duration: 2,
+            priority: 'medium',
+            deadline: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+            description: 'Use case diagrams + test plan draft',
             completed: false,
             createdAt: new Date().toISOString()
         }
