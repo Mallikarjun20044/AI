@@ -482,9 +482,10 @@ if (document.getElementById('taskFilter')) {
  */
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize data
+    migrateLegacySamples();
     const tasks = loadTasks();
     const timetable = loadTimetable();
-    
+
     // Render components
     renderTasks();
     renderTimetable();
@@ -605,6 +606,35 @@ function initializeSampleData() {
     localStorage.setItem('studyTasks', JSON.stringify(sampleTasks));
     renderTasks();
     updateDashboard();
+}
+
+// Replace legacy sample subjects (Math/Biology/English/History) with current semester set if detected
+function migrateLegacySamples() {
+    const legacySubjects = ['Mathematics', 'Biology', 'English', 'History'];
+    const allowedSubjects = [
+        'Web Technology',
+        'Theory of Computation',
+        'Computer Networks',
+        'Artificial Intelligence',
+        'Research & Methodologies',
+        'Software Engineering'
+    ];
+
+    const tasks = loadTasks();
+    if (tasks.length === 0) {
+        initializeSampleData();
+        return;
+    }
+
+    const allLegacy = tasks.every(t => legacySubjects.includes(t.subject));
+    if (allLegacy) {
+        initializeSampleData();
+    }
+}
+
+// Scroll to dashboard for quick demo
+function watchDemo() {
+    scrollToSection('dashboard');
 }
 
 // ========================================

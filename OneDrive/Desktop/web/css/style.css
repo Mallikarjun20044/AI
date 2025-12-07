@@ -387,6 +387,7 @@ section {
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    scroll-margin-top: 100px; /* prevents content jump under fixed nav */
 }
 
 .section-header {
