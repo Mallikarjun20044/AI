@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Planner - AI-Powered Learning Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-brain"></i>
+                <span>SmartStudy</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link" onclick="scrollToSection('home')">Home</a></li>
+                <li><a href="#dashboard" class="nav-link" onclick="scrollToSection('dashboard')">Dashboard</a></li>
+                <li><a href="#tasks" class="nav-link" onclick="scrollToSection('tasks')">Tasks</a></li>
+                <li><a href="#timetable" class="nav-link" onclick="scrollToSection('timetable')">Timetable</a></li>
+                <li><a href="#analytics" class="nav-link" onclick="scrollToSection('analytics')">Analytics</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Landing Page Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="gradient-blob blob-1"></div>
+            <div class="gradient-blob blob-2"></div>
+            <div class="gradient-blob blob-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Master Your Study Time</h1>
+                <p class="hero-subtitle">AI-powered study planner that helps you learn smarter, not harder</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('dashboard')">
+                        <i class="fas fa-arrow-right"></i> Start Planning
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-play-circle"></i> Watch Demo
+                    </button>
+                </div>
+            </div>
+            <div class="hero-illustration">
+                <div class="floating-card card-1">
+                    <i class="fas fa-book"></i>
+                    <p>Learn</p>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Track</p>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-brain"></i>
+                    <p>Improve</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard">
+        <div class="section-header">
+            <h2>Your Study Dashboard</h2>
+            <p>Overview of your today's learning goals</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Today's Tasks Card -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-day"></i> Today's Tasks</h3>
+                    <span class="task-count" id="taskCount">0</span>
+                </div>
+                <div class="tasks-preview" id="tasksPreview">
+                    <p class="empty-state">No tasks yet. Let's get started!</p>
+                </div>
+                <button class="btn btn-sm btn-primary" onclick="scrollToSection('tasks')">
+                    View All Tasks
+                </button>
+            </div>
+
+            <!-- Progress Overview -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-pie"></i> Progress</h3>
+                </div>
+                <div class="progress-ring-container">
+                    <svg class="progress-ring" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="54" class="progress-ring-circle"></circle>
+                    </svg>
+                    <div class="progress-text">
+                        <span class="progress-percentage" id="progressPercentage">0%</span>
+                        <p>Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                </div>
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="openTaskModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Task</span>
+                    </button>
+                    <button class="action-btn" onclick="generateAISuggestion()">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <span>AI Suggestion</span>
+                    </button>
+                    <button class="action-btn" onclick="scrollToSection('timetable')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Timetable</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Study Streak -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-fire"></i> Study Streak</h3>
+                </div>
+                <div class="streak-info">
+                    <div class="streak-number" id="streakDays">7</div>
+                    <p>Days in a row</p>
+                    <div class="streak-icons">
+                        <i class="fas fa-circle"></i>
+                        <i class="fas fa-circle"></i>
+                        <i class="fas fa-circle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Suggestions Section -->
+    <section id="suggestions" class="ai-suggestions">
+        <div class="section-header">
+            <h2>AI Smart Plan</h2>
+            <p>Personalized study recommendations just for you</p>
+        </div>
+        <div class="suggestions-container" id="suggestionsContainer">
+            <div class="suggestion-card" id="suggestionCard" style="display: none;">
+                <div class="suggestion-header">
+                    <h3><i class="fas fa-lightbulb"></i> Recommended Study Plan</h3>
+                    <button class="btn-icon" onclick="generateAISuggestion()">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+                <div class="suggestion-content">
+                    <div class="suggestion-item">
+                        <h4>📚 Recommended Subjects</h4>
+                        <div id="suggestedSubjects" class="subject-list"></div>
+                    </div>
+                    <div class="suggestion-item">
+                        <h4>⏱️ Study Hours</h4>
+                        <div id="suggestedHours" class="hours-list"></div>
+                    </div>
+                    <div class="suggestion-item">
+                        <h4>☕ Break Intervals</h4>
+                        <div id="suggestedBreaks" class="breaks-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Task Manager Section -->
+    <section id="tasks" class="tasks-section">
+        <div class="section-header">
+            <h2>Task Manager</h2>
+            <p>Organize and track all your study tasks</p>
+        </div>
+
+        <div class="task-controls">
+            <button class="btn btn-primary" onclick="openTaskModal()">
+                <i class="fas fa-plus"></i> Add New Task
+            </button>
+            <input type="text" id="taskFilter" class="task-filter" placeholder="Search tasks...">
+        </div>
+
+        <div class="tasks-container" id="tasksContainer">
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p>No tasks yet. Create one to get started!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timetable Section -->
+    <section id="timetable" class="timetable-section">
+        <div class="section-header">
+            <h2>Weekly Timetable</h2>
+            <p>Plan your week with a visual schedule</p>
+        </div>
+
+        <div class="timetable-container">
+            <div class="timetable-header">
+                <div class="time-slot"></div>
+                <div class="day-cell" onclick="selectDay('Mon')">Mon</div>
+                <div class="day-cell" onclick="selectDay('Tue')">Tue</div>
+                <div class="day-cell" onclick="selectDay('Wed')">Wed</div>
+                <div class="day-cell" onclick="selectDay('Thu')">Thu</div>
+                <div class="day-cell" onclick="selectDay('Fri')">Fri</div>
+                <div class="day-cell" onclick="selectDay('Sat')">Sat</div>
+                <div class="day-cell" onclick="selectDay('Sun')">Sun</div>
+            </div>
+
+            <div class="timetable-grid" id="timetableGrid">
+                <!-- Time slots and subjects will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics" class="analytics-section">
+        <div class="section-header">
+            <h2>Analytics & Insights</h2>
+            <p>Track your learning progress and achievements</p>
+        </div>
+
+        <div class="analytics-grid">
+            <!-- Weekly Study Hours Chart -->
+            <div class="analytics-card">
+                <h3><i class="fas fa-chart-bar"></i> Weekly Study Hours</h3>
+                <div class="chart-container">
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <div class="bar" style="height: 70%;"></div>
+                            <span>Mon</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar" style="height: 85%;"></div>
+                            <span>Tue</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar" style="height: 60%;"></div>
+                            <span>Wed</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar" style="height: 90%;"></div>
+                            <span>Thu</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar" style="height: 75%;"></div>
+                            <span>Fri</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar" style="height: 45%;"></div>
+                            <span>Sat</span>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar" style="height: 50%;"></div>
+                            <span>Sun</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completion Rate -->
+            <div class="analytics-card">
+                <h3><i class="fas fa-check-circle"></i> Completion Rate</h3>
+                <div class="donut-chart">
+                    <svg viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="50" class="donut-bg"></circle>
+                        <circle cx="60" cy="60" r="50" class="donut-fill" style="stroke-dasharray: 314; stroke-dashoffset: 78;"></circle>
+                    </svg>
+                    <div class="donut-text">
+                        <span id="completionRate">78%</span>
+                        <p>Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Distribution -->
+            <div class="analytics-card">
+                <h3><i class="fas fa-book"></i> Subject Distribution</h3>
+                <div class="subject-distribution">
+                    <div class="distribution-item">
+                        <div class="distribution-label">Mathematics</div>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" style="width: 35%;"></div>
+                        </div>
+                        <span>35%</span>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-label">Science</div>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" style="width: 28%;"></div>
+                        </div>
+                        <span>28%</span>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-label">Language</div>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" style="width: 22%;"></div>
+                        </div>
+                        <span>22%</span>
+                    </div>
+                    <div class="distribution-item">
+                        <div class="distribution-label">History</div>
+                        <div class="distribution-bar">
+                            <div class="distribution-fill" style="width: 15%;"></div>
+                        </div>
+                        <span>15%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="analytics-card stats-card">
+                <h3><i class="fas fa-star"></i> Key Statistics</h3>
+                <div class="stats-list">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalTasks">12</div>
+                        <p>Total Tasks</p>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="completedTasks">9</div>
+                        <p>Completed</p>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">42h</div>
+                        <p>Study Time</p>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avgRating">4.8</div>
+                        <p>Avg Rating</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Task</h2>
+                <button class="modal-close" onclick="closeTaskModal()">&times;</button>
+            </div>
+            <form id="taskForm" onsubmit="addTask(event)">
+                <div class="form-group">
+                    <label for="taskTitle">Task Title *</label>
+                    <input type="text" id="taskTitle" required placeholder="Enter task title">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskSubject">Subject *</label>
+                        <input type="text" id="taskSubject" required placeholder="e.g., Mathematics">
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDuration">Duration (hours) *</label>
+                        <input type="number" id="taskDuration" required min="0.5" step="0.5" placeholder="1.5">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="taskPriority">Priority *</label>
+                        <select id="taskPriority" required>
+                            <option value="">Select priority</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDeadline">Deadline</label>
+                        <input type="date" id="taskDeadline">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="taskDescription">Description</label>
+                    <textarea id="taskDescription" placeholder="Add notes or details..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>SmartStudy</h4>
+                <p>AI-powered study planning for modern learners</p>
+            </div>
+            <div class="footer-section">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#tasks">Tasks</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Follow Us</h5>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SmartStudy Planner. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
