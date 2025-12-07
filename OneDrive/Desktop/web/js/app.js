@@ -479,6 +479,9 @@ document.addEventListener('DOMContentLoaded', function() {
     renderTasks();
     renderTimetable();
     updateDashboard();
+
+    // Reveal sections on scroll for polished entrance animations
+    setupScrollReveal();
     
     // Set initial active day
     const dayCell = document.querySelector('.day-cell');
@@ -491,6 +494,30 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeSampleData();
     }
 });
+
+// ========================================
+// SCROLL REVEAL ANIMATION
+// ========================================
+
+/**
+ * Add IntersectionObserver to reveal sections smoothly on scroll
+ */
+function setupScrollReveal() {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(section => {
+        observer.observe(section);
+    });
+}
 
 /**
  * Initialize with sample data for demonstration
